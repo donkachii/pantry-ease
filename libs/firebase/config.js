@@ -8,13 +8,13 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDLkHmAlW63RSbSayQElKNMPFbN7CnWQ0U",
-  authDomain: "pantry-ease-app.firebaseapp.com",
-  projectId: "pantry-ease-app",
-  storageBucket: "pantry-ease-app.appspot.com",
-  messagingSenderId: "252650989858",
-  appId: "1:252650989858:web:88f3769caa55fe6a58dd7b",
-  measurementId: "G-VPYLB7V3NQ",
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

@@ -96,26 +96,15 @@ function Header({ mode, toggleColorMode }) {
                 alignItems: "center",
               }}
             >
-              <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+              {/* <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} /> */}
               <Button
                 color="primary"
                 variant="text"
                 size="small"
                 component="a"
                 href="/sign-in"
-                target="_blank"
               >
                 Sign in
-              </Button>
-              <Button
-                color="primary"
-                variant="contained"
-                size="small"
-                component="a"
-                href="/material-ui/getting-started/templates/sign-up/"
-                target="_blank"
-              >
-                Sign up
               </Button>
             </Box>
             <Box sx={{ display: { sm: "", md: "none" } }}>
