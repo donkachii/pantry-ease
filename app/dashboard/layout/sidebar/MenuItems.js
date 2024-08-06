@@ -27,42 +27,42 @@ const Menuitems = [
     icon: IconTable,
     href: "/dashboard/items",
   },
-  {
-    id: uniqueId(),
-    title: "Category List",
-    icon: IconCircleDot,
-    href: "/ui-components/forms",
-  },
-  {
-    id: uniqueId(),
-    title: "Alerts",
-    icon: IconInfoCircle,
-    href: "/ui-components/alerts",
-  },
-  {
-    id: uniqueId(),
-    title: "Ratings",
-    icon: IconStar,
-    href: "/ui-components/ratings",
-  },
-  {
-    id: uniqueId(),
-    title: "Images",
-    icon: IconPhoto,
-    href: "/ui-components/images",
-  },
-  {
-    id: uniqueId(),
-    title: "Pagination",
-    icon: IconUser,
-    href: "/ui-components/pagination",
-  },
-  {
-    id: uniqueId(),
-    title: "Tables",
-    icon: IconLayoutGrid,
-    href: "/ui-components/table",
-  },
+  // {
+  //   id: uniqueId(),
+  //   title: "Category List",
+  //   icon: IconCircleDot,
+  //   href: "/ui-components/forms",
+  // },
+  // {
+  //   id: uniqueId(),
+  //   title: "Alerts",
+  //   icon: IconInfoCircle,
+  //   href: "/ui-components/alerts",
+  // },
+  // {
+  //   id: uniqueId(),
+  //   title: "Ratings",
+  //   icon: IconStar,
+  //   href: "/ui-components/ratings",
+  // },
+  // {
+  //   id: uniqueId(),
+  //   title: "Images",
+  //   icon: IconPhoto,
+  //   href: "/ui-components/images",
+  // },
+  // {
+  //   id: uniqueId(),
+  //   title: "Pagination",
+  //   icon: IconUser,
+  //   href: "/ui-components/pagination",
+  // },
+  // {
+  //   id: uniqueId(),
+  //   title: "Tables",
+  //   icon: IconLayoutGrid,
+  //   href: "/ui-components/table",
+  // },
 ];
 
 export default Menuitems;
