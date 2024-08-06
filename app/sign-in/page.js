@@ -9,10 +9,18 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useUserSession } from "@/hooks/use-user-session";
-import { signInWithGoogle } from "@/libs/firebase/auth";
-import { createSession, removeSession } from "@/actions/auth-actions";
+import { signInWithGoogle } from "../../libs/firebase/auth";
+import { createSession } from "../../actions/auth-actions";
 import { useRouter } from "next/navigation";
+import { useUserContext } from "../../ui/theme";
+import { firestore } from "../../libs/firebase/config";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 function Copyright(props) {
   return (
@@ -34,12 +42,37 @@ function Copyright(props) {
 
 export default function SignIn() {
   const router = useRouter();
+  const { setUser } = useUserContext();
 
   const handleSignIn = async () => {
-    const userUid = await signInWithGoogle();
-    if (userUid) {
-      await createSession(userUid);
-      router.push("/");
+    const user = await signInWithGoogle();
+    if (user) {
+      const userRef = doc(firestore, "users", user.uid);
+      const docSnap = await getDoc(userRef);
+
+      if (docSnap.exists()) {
+        // User exists, update the last login time
+        await updateDoc(userRef, {
+          lastLogin: serverTimestamp(),
+        });
+      } else {
+        // User does not exist, create a new user document
+        await setDoc(userRef, {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          createdAt: serverTimestamp(),
+          lastLogin: serverTimestamp(),
+        });
+      }
+
+      setUser({
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      });
+      localStorage.setItem("user", JSON.stringify(user));
+      await createSession(user.uid);
+      router.push("/dashboard");
     }
   };
 

@@ -6,8 +6,6 @@ import {
 
 import { firebaseAuth } from "./config";
 
-import { useRouter } from "next/navigation";
-
 // TODO: Convert to JS properly
 export function onAuthStateChanged(callback) {
   return _onAuthStateChanged(firebaseAuth, callback);
@@ -23,7 +21,7 @@ export async function signInWithGoogle() {
       throw new Error("Google sign in failed");
     }
 
-    return result.user.uid;
+    return result.user;
   } catch (error) {
     console.error("Error signing in with Google", error);
   }

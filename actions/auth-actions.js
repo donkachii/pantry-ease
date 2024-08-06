@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { ROOT_ROUTE, HOME_ROUTE, SESSION_COOKIE_NAME } from "@/constant";
+import { ROOT_ROUTE, HOME_ROUTE, SESSION_COOKIE_NAME } from "../constant";
 
 export async function createSession(uid) {
   cookies().set(SESSION_COOKIE_NAME, uid, {

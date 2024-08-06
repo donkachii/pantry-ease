@@ -1,26 +1,29 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import Header from "./Header";
 import Hero from "./Hero";
-import { useUserSession } from "@/hooks/use-user-session";
-import Dashboard from "@/app/dashboard/page";
+import { useUserSession } from "../hooks/use-user-session";
+import { useUserContext } from "../ui/theme";
 
 const Homepage = ({ session }) => {
+  const router = useRouter();
   const userSessionId = useUserSession(session);
+
   console.log("🚀 ~ Home ~ userSessionId:", userSessionId);
+
+  useEffect(() => {
+    if (userSessionId) {
+      router.push("/dashboard");
+    }
+  }, [userSessionId, router]);
 
   return (
     <>
-      {!userSessionId ? (
-        <>
-          <Header />
-          <Hero />
-        </>
-      ) : (
-        <Dashboard />
-      )}
+      <Header />
+      <Hero />
     </>
   );
 };

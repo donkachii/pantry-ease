@@ -1,5 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
@@ -14,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ToggleColorMode from "./ToggleColorMode";
 
 const logoStyle = {
-  width: "140px",
+  width: "40px",
   height: "auto",
   cursor: "pointer",
 };
@@ -79,15 +78,24 @@ function Header({ mode, toggleColorMode }) {
                 flexGrow: 1,
                 display: "flex",
                 alignItems: "center",
-                ml: "-18px",
+                ml: "18px",
                 px: 0,
               }}
             >
-              <img
-                src={"/assets/images/pantry.png"}
-                style={logoStyle}
-                alt="logo"
-              />
+              <Typography
+                component="span"
+                variant="h3"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "clamp(1rem, 5vw, 1.5rem)",
+                  color: (theme) =>
+                    theme.palette.mode === "light"
+                      ? "primary.main"
+                      : "primary.light",
+                }}
+              >
+                PantryEase
+              </Typography>
             </Box>
             <Box
               sx={{
@@ -188,10 +196,5 @@ function Header({ mode, toggleColorMode }) {
     </div>
   );
 }
-
-Header.propTypes = {
-  mode: PropTypes.oneOf(["dark", "light"]).isRequired,
-  toggleColorMode: PropTypes.func.isRequired,
-};
 
 export default Header;

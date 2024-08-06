@@ -9,14 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@date-io/date-fns": "^3.0.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@iconify/react": "^5.0.2",
     "@mui/icons-material": "^5.16.6",
+    "@mui/lab": "^5.0.0-alpha.173",
     "@mui/material": "^5.16.6",
+    "@mui/x-date-pickers": "^7.12.0",
+    "@tabler/icons-react": "^3.11.0",
+    "date-fns": "^3.6.0",
     "firebase": "^10.12.5",
     "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-helmet-async": "^2.0.5",
+    "tabler": "^1.0.0-alpha.8"
   },
   "devDependencies": {
     "eslint": "^8",

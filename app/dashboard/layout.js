@@ -1,31 +1,69 @@
-import { useState } from "react";
+"use client";
+import { styled, Container, Box } from "@mui/material";
+import React, { useState } from "react";
+import Header from "./layout/header/Header";
+import Sidebar from "./layout/sidebar/Sidebar";
+import Footer from "./layout/footer/page";
 
-import Box from "@mui/material/Box";
+const MainWrapper = styled("div")(() => ({
+  display: "flex",
+  minHeight: "100vh",
+  width: "100%",
+}));
 
-import Nav from "./nav";
-import Main from "./main";
-import Header from "./header";
-
-// ----------------------------------------------------------------------
+const PageWrapper = styled("div")(() => ({
+  display: "flex",
+  flexGrow: 1,
+  paddingBottom: "60px",
+  flexDirection: "column",
+  zIndex: 1,
+  backgroundColor: "transparent",
+}));
 
 export default function DashboardLayout({ children }) {
-  const [openNav, setOpenNav] = useState(false);
-
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   return (
-    <>
-      <Header onOpenNav={() => setOpenNav(true)} />
+    <MainWrapper className="mainwrapper">
+      {/* ------------------------------------------- */}
+      {/* Sidebar */}
+      {/* ------------------------------------------- */}
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        isMobileSidebarOpen={isMobileSidebarOpen}
+        onSidebarClose={() => setMobileSidebarOpen(false)}
+      />
+      {/* ------------------------------------------- */}
+      {/* Main Wrapper */}
+      {/* ------------------------------------------- */}
+      <PageWrapper className="page-wrapper">
+        {/* ------------------------------------------- */}
+        {/* Header */}
+        {/* ------------------------------------------- */}
+        <Header toggleMobileSidebar={() => setMobileSidebarOpen(true)} />
+        {/* ------------------------------------------- */}
+        {/* PageContent */}
+        {/* ------------------------------------------- */}
+        <Container
+          sx={{
+            paddingTop: "20px",
+            maxWidth: "1200px",
+          }}
+        >
+          {/* ------------------------------------------- */}
+          {/* Page Route */}
+          {/* ------------------------------------------- */}
+          <Box sx={{ minHeight: "calc(100vh - 170px)" }}>{children}</Box>
+          {/* ------------------------------------------- */}
+          {/* End Page */}
+          {/* ------------------------------------------- */}
 
-      <Box
-        sx={{
-          minHeight: 1,
-          display: "flex",
-          flexDirection: { xs: "column", lg: "row" },
-        }}
-      >
-        <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
-
-        <Main>{children}</Main>
-      </Box>
-    </>
+          {/* ------------------------------------------- */}
+          {/* Footer */}
+          {/* ------------------------------------------- */}
+          <Footer />
+        </Container>
+      </PageWrapper>
+    </MainWrapper>
   );
 }
