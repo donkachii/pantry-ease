@@ -31,7 +31,6 @@ const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
 
   const { user } = useUserContext();
-  console.log("🚀 ~ Profile ~ user:", user);
 
   const assistUser = JSON.parse(localStorage.getItem("user"));
   console.log(assistUser);

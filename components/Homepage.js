@@ -12,8 +12,6 @@ const Homepage = ({ session }) => {
   const router = useRouter();
   const userSessionId = useUserSession(session);
 
-  console.log("🚀 ~ Home ~ userSessionId:", userSessionId);
-
   useEffect(() => {
     if (userSessionId) {
       router.push("/dashboard");
