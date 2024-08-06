@@ -9,8 +9,8 @@ import {
   Fab,
   ButtonGroup,
 } from "@mui/material";
-import PageContainer from "@/app/dashboard/components/container/PageContainer";
-import BaseCard from "@/app/dashboard/components/shared/BaseCard";
+import PageContainer from "../../../dashboard/components/container/PageContainer";
+import BaseCard from "../../../dashboard/components/shared/BaseCard";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { IconHome, IconTrash, IconUser } from "@tabler/icons-react";
 

@@ -1,6 +1,6 @@
 "use client";
-import PageContainer from "@/app/dashboard/components/container/PageContainer";
-import DashboardCard from "@/app/dashboard/components/shared/DashboardCard";
+import PageContainer from "../../dashboard/components/shared/DashboardCard";
+import DashboardCard from "../../dashboard/components/shared/DashboardCard";
 
 const Icons = () => {
   return (
