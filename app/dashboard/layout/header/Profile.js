@@ -32,13 +32,9 @@ const Profile = () => {
 
   const { user } = useUserContext();
 
-  const assistUser = JSON.parse(localStorage.getItem("user"));
-  console.log(assistUser);
-
   const handleSignOut = async () => {
     await signOutWithGoogle();
     await removeSession();
-    localStorage.removeItem("user");
   };
 
   const handleClick2 = (event) => {
@@ -100,11 +96,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={
-            user.photoURL ||
-            (assistUser && assistUser.photoURL) ||
-            "/images/users/user2.jpg"
-          }
+          src={user.photoURL || "/images/users/user2.jpg"}
           alt={"ProfileImg"}
           sx={{
             width: 30,
@@ -135,9 +127,7 @@ const Profile = () => {
               ml: 1,
             }}
           >
-            {user.displayName ||
-              (assistUser && assistUser.displayName) ||
-              "Julia"}
+            {user.displayName || "Julia"}
           </Typography>
           <IconChevronDown width="20" height="20" />
         </Box>

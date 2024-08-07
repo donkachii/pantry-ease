@@ -70,9 +70,15 @@ export default function SignIn() {
         displayName: user.displayName,
         photoURL: user.photoURL,
       });
-      localStorage.setItem("user", JSON.stringify(user));
-      await createSession(user.uid);
-      router.push("/dashboard");
+
+      const userDetails = {
+        displayName: user.displayName,
+        uid: user.uid,
+        photoURL: user.photoURL,
+      };
+
+      await createSession(JSON.stringify(userDetails));
+      router.push("/");
     }
   };
 

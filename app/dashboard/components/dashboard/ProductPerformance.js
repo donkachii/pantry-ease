@@ -83,7 +83,7 @@ const ProductPerfomance = ({
           <TableBody>
             {allItems.map((item, id) => (
               <>
-                <TableRow key={item.id}>
+                <TableRow id={item.id} key={item.id}>
                   <TableCell>
                     <Typography fontSize="15px" fontWeight={500}>
                       {id + 1}
@@ -121,33 +121,30 @@ const ProductPerfomance = ({
                     </IconButton>
                   </TableCell>
                 </TableRow>
-                {/* Edit and Delete */}
-                <Popover
-                  open={!!open}
-                  anchorEl={open}
-                  onClose={handleCloseMenu}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                  transformOrigin={{ vertical: "top", horizontal: "center" }}
-                  slotProps={{
-                    paper: { sx: { width: 140 } },
-                  }}
-                >
-                  <MenuItem onClick={handleCloseMenu}>
-                    <IconPencil /> Edit
-                  </MenuItem>
-
-                  <MenuItem
-                    onClick={() => deleteItems(item.id)}
-                    sx={{ color: "error.main" }}
-                  >
-                    <IconTrash /> Delete
-                  </MenuItem>
-                </Popover>
               </>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      {/* Edit and Delete */}
+      <Popover
+        open={!!open}
+        anchorEl={open}
+        onClose={handleCloseMenu}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        transformOrigin={{ vertical: "top", horizontal: "center" }}
+        slotProps={{
+          paper: { sx: { width: 140 } },
+        }}
+      >
+        <MenuItem onClick={handleCloseMenu}>
+          <IconPencil /> Edit
+        </MenuItem>
+
+        <MenuItem onClick={deleteItems} sx={{ color: "error.main" }}>
+          <IconTrash /> Delete
+        </MenuItem>
+      </Popover>
     </BaseCard>
   );
 };
