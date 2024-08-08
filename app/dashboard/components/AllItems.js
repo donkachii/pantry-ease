@@ -30,7 +30,8 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import DatePicker from "../../../components/DatePicker";
-import { useUserContext } from "../../../ui/theme";
+import UpdateForm from "./forms/UpdateForm";
+import AddForm from "./forms/AddForm";
 
 const Items = ({ session }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -116,6 +117,7 @@ const Items = ({ session }) => {
 
   const deleteItems = async () => {
     await deleteDoc(doc(firestore, "items", dropDownId));
+    handleCloseMenu();
     await updateItems();
   };
 
@@ -124,14 +126,14 @@ const Items = ({ session }) => {
   }, []);
 
   return (
-    <PageContainer title="Item Lists" description="this is List Items">
+    <PageContainer title="Inventory" description="this is List Items">
       <Stack
         direction="row"
         alignItems="center"
         justifyContent="space-between"
         mb={5}
       >
-        <Typography variant="h4">Item Lists</Typography>
+        <Typography variant="h4">Inventory</Typography>
 
         <Button
           variant="contained"
@@ -162,6 +164,21 @@ const Items = ({ session }) => {
         <p>Not Items in the Pantry</p>
       )}
       {/* TODO: Adding Items to the pantry */}
+      <UpdateForm
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        handleDateChange={handleDateChange}
+        handleAddFormChange={handleAddFormChange}
+        updateItem={updateItem}
+      />
+
+      <AddForm
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        handleDateChange={handleDateChange}
+        handleAddFormChange={handleAddFormChange}
+        addItem={addItem}
+      />
       <Dialog
         open={openModal}
         onClose={handleCloseModal}
