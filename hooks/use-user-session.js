@@ -12,23 +12,14 @@ export function useUserSession(InitSession) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged((authUser) => {
       if (authUser) {
-        setUser({
-          displayName: authUser.displayName,
-          photoURL: authUser.photoURL,
-        });
         setUserUid(authUser.uid);
       } else {
-        setUser({
-          displayName: "",
-
-          photoURL: "",
-        });
         setUserUid(null);
       }
     });
 
     return () => unsubscribe();
-  }, [setUser]);
+  }, []);
 
   return userUid;
 }

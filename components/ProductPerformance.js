@@ -7,22 +7,14 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Chip,
   TableContainer,
   IconButton,
   Popover,
   MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-  TextField,
 } from "@mui/material";
-import BaseCard from "../shared/DashboardCard";
+import BaseCard from "./DashboardCard";
 import { IconDotsVertical, IconPencil, IconTrash } from "@tabler/icons-react";
-import { fDate, fTimestamp } from "../../../../utils/format-time";
+import { fDate } from "../utils/format-time";
 
 const ProductPerfomance = ({
   allItems,

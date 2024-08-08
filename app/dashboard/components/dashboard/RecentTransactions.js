@@ -1,4 +1,4 @@
-import DashboardCard from "@/app/dashboard/components/shared/DashboardCard";
+import DashboardCard from "@/components/DashboardCard";
 import {
   Timeline,
   TimelineItem,

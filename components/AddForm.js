@@ -8,7 +8,7 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import DatePicker from "../../../../components/DatePicker";
+import DatePicker from "./DatePicker";
 import React from "react";
 
 const AddForm = ({
@@ -16,6 +16,8 @@ const AddForm = ({
   handleCloseModal,
   handleAddFormChange,
   addItem,
+  selectedDate,
+  handleDateChange,
 }) => {
   return (
     <Dialog

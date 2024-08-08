@@ -8,7 +8,7 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import DatePicker from "../../../../components/DatePicker";
+import DatePicker from "./DatePicker";
 import React from "react";
 
 const UpdateForm = ({

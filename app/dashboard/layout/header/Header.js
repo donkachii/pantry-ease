@@ -16,7 +16,7 @@ import Profile from "./Profile";
 import Search from "./Search";
 import { IconMenu2 } from "@tabler/icons-react";
 
-const Header = ({ toggleMobileSidebar }) => {
+const Header = ({ toggleMobileSidebar, session }) => {
   // const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   // const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
@@ -55,7 +55,7 @@ const Header = ({ toggleMobileSidebar }) => {
 
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">
-          <Profile />
+          <Profile session={session} />
         </Stack>
       </ToolbarStyled>
     </AppBarStyled>

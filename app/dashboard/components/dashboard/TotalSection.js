@@ -6,52 +6,51 @@ import user1 from "../../../../public/assets/images/backgrounds/u2.jpg";
 import user2 from "../../../../public/assets/images/backgrounds/u3.jpg";
 import user3 from "../../../../public/assets/images/backgrounds/u4.jpg";
 
-const sections = [
-  {
-    title: "Total Items",
-    subtitle: 20,
-    bgColor: "primary.light",
-    color: "#fff",
-    size: "45px",
-  },
-  {
-    title: "Total Categories",
-    subtitle: 2,
-    bgColor: "secondary.light",
-    color: "#fff",
-    size: "45px",
-  },
-  {
-    title: "Items expired",
-    subtitle: 8,
-    bgColor: "error.light",
-    color: "#fff",
-    size: "45px",
-  },
-  {
-    title: "Items expiring within 90 days",
-    subtitle: 6,
-    bgColor: "#14a37f",
-    color: "#fff",
-    size: "45px",
-  },
-  {
-    title: "Items expiring within 90 days",
-    subtitle: 6,
-    bgColor: "#b26500",
-    color: "#fff",
-    size: "45px",
-  },
-  {
-    title: "Make Money by Managing Pantries",
-    subtitle: "Coming Soon 😊",
-    bgColor: "#b2a300",
-    color: "#fff",
-    size: "28px",
-  },
-];
-
-const TotalCard = () => {
+const TotalCard = ({ items }) => {
+  const sections = [
+    {
+      title: "Total Items",
+      subtitle: items.length || 0,
+      bgColor: "primary.light",
+      color: "#fff",
+      size: "45px",
+    },
+    {
+      title: "Total Categories",
+      subtitle: 2,
+      bgColor: "secondary.light",
+      color: "#fff",
+      size: "45px",
+    },
+    {
+      title: "Items expired",
+      subtitle: 8,
+      bgColor: "error.light",
+      color: "#fff",
+      size: "45px",
+    },
+    {
+      title: "Items expiring within 90 days",
+      subtitle: 6,
+      bgColor: "#14a37f",
+      color: "#fff",
+      size: "45px",
+    },
+    {
+      title: "Items expiring within 90 days",
+      subtitle: 6,
+      bgColor: "#b26500",
+      color: "#fff",
+      size: "45px",
+    },
+    {
+      title: "Make Money by Managing Pantries",
+      subtitle: "Coming Soon 😊",
+      bgColor: "#b2a300",
+      color: "#fff",
+      size: "28px",
+    },
+  ];
   return (
     <Grid container spacing={3}>
       {sections.map((section, index) => (

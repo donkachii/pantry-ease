@@ -12,10 +12,10 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import PageContainer from "./container/PageContainer";
-import ProductPerfomance from "./dashboard/ProductPerformance";
+import PageContainer from "./PageContainer";
+import ProductPerfomance from "./ProductPerformance";
 import { Add } from "@mui/icons-material";
-import { firestore } from "../../../libs/firebase/config";
+import { firestore } from "../libs/firebase/config";
 import {
   doc,
   addDoc,
@@ -29,9 +29,17 @@ import {
   onSnapshot,
   deleteDoc,
 } from "firebase/firestore";
-import DatePicker from "../../../components/DatePicker";
-import UpdateForm from "./forms/UpdateForm";
-import AddForm from "./forms/AddForm";
+import DatePicker from "./DatePicker";
+import UpdateForm from "./UpdateForm";
+import AddForm from "./AddForm";
+import { useRouter } from "next/navigation";
+import { useAppSelector, useAppDispatch, useAppStore } from "../libs/hooks";
+import {
+  fetchItems,
+  postItem,
+  removeItem,
+} from "../libs/features/items/itemReducer";
+import Loading from "../app/dashboard/loading";
 
 const Items = ({ session }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -42,6 +50,10 @@ const Items = ({ session }) => {
   const [dropDownId, setDropdownId] = useState("");
 
   //   const user = JSON.parse(localStorage.getItem("user"));
+  const router = useRouter();
+  const { isLoading, status, items } = useAppSelector((state) => state);
+  console.log("🚀 ~ Items ~ isLoading:", status);
+  const dispatch = useAppDispatch();
 
   const user = JSON.parse(session);
 
@@ -71,21 +83,6 @@ const Items = ({ session }) => {
     setSelectedDate(value);
   };
 
-  const updateItems = async () => {
-    const pantryItems = [];
-
-    const q = query(
-      collection(firestore, "items"),
-      where("userID", "==", user.uid)
-    );
-
-    const snapshot = await getDocs(q);
-    snapshot.forEach((doc) => {
-      pantryItems.push({ id: doc.id, ...doc.data() });
-    });
-    setAllItems(pantryItems);
-  };
-
   const addItem = async (e) => {
     e.preventDefault();
     if (
@@ -94,14 +91,17 @@ const Items = ({ session }) => {
       data.quantity !== "" &&
       selectedDate !== ""
     ) {
-      await addDoc(collection(firestore, "items"), {
-        item: data.item.trim(),
-        category: data.category.trim(),
-        quantity: parseInt(data.quantity),
-        expiryDate: selectedDate,
-        userID: user.uid,
-        createdAt: serverTimestamp(),
-      });
+      dispatch(
+        postItem({
+          item: data.item.trim(),
+          category: data.category.trim(),
+          quantity: parseInt(data.quantity),
+          expiryDate: selectedDate,
+          userID: user.uid,
+          createdAt: serverTimestamp(),
+        })
+      );
+
       setData({
         item: "",
         category: "",
@@ -110,20 +110,27 @@ const Items = ({ session }) => {
         userID: "",
         createdAt: "",
       });
+      setSelectedDate("");
       handleCloseModal();
-      await updateItems();
+      dispatch(fetchItems(user.uid));
     }
   };
 
   const deleteItems = async () => {
-    await deleteDoc(doc(firestore, "items", dropDownId));
+    dispatch(removeItem(dropDownId));
+    dispatch(fetchItems(user.uid));
     handleCloseMenu();
-    await updateItems();
   };
 
   useEffect(() => {
-    updateItems();
-  }, []);
+    dispatch(fetchItems(user.uid));
+  }, [dispatch, user.uid]);
+
+  useEffect(() => {
+    if (!user.uid) {
+      router.push("/");
+    }
+  }, [user.uid, router]);
 
   return (
     <PageContainer title="Inventory" description="this is List Items">
@@ -144,11 +151,17 @@ const Items = ({ session }) => {
           New Item
         </Button>
       </Stack>
-      {allItems && allItems.length !== 0 ? (
+      {isLoading && (
+        <>
+          <p>Loading....</p>
+          <Loading />
+        </>
+      )}
+      {items && items.length !== 0 ? (
         <Box mt={3}>
           <ProductPerfomance
             addItem={addItem}
-            allItems={allItems}
+            allItems={items}
             openModal={openModal}
             open={open}
             handleCloseModal={handleCloseModal}
@@ -161,22 +174,24 @@ const Items = ({ session }) => {
           />
         </Box>
       ) : (
-        <p>Not Items in the Pantry</p>
+        !isLoading && status === "success" && <p>No Items in the Pantry</p>
       )}
       {/* TODO: Adding Items to the pantry */}
-      <UpdateForm
+      {/* <UpdateForm
         openModal={openModal}
         handleCloseModal={handleCloseModal}
         handleDateChange={handleDateChange}
         handleAddFormChange={handleAddFormChange}
-        updateItem={updateItem}
-      />
+        selectedDate={selectedDate}
+        updateItem={addItem}
+      /> */}
 
       <AddForm
         openModal={openModal}
         handleCloseModal={handleCloseModal}
         handleDateChange={handleDateChange}
         handleAddFormChange={handleAddFormChange}
+        selectedDate={selectedDate}
         addItem={addItem}
       />
       <Dialog

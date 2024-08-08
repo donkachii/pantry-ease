@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
-import BaseCard from "../shared/DashboardCard";
+import BaseCard from "../../../../components/DashboardCard";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const SalesOverview = () => {

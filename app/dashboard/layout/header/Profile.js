@@ -17,7 +17,6 @@ import {
 import { Stack } from "@mui/system";
 import { removeSession } from "../../../../actions/auth-actions";
 import { signOutWithGoogle } from "../../../../libs/firebase/auth";
-import { useUserContext } from "../../../../ui/theme";
 
 import {
   IconChevronDown,
@@ -27,10 +26,8 @@ import {
   IconShield,
 } from "@tabler/icons-react";
 
-const Profile = () => {
+const Profile = ({ session }) => {
   const [anchorEl2, setAnchorEl2] = useState(null);
-
-  const { user } = useUserContext();
 
   const handleSignOut = async () => {
     await signOutWithGoogle();
@@ -96,7 +93,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={user.photoURL || "/images/users/user2.jpg"}
+          src={session.photoURL || "/images/sessions/session2.jpg"}
           alt={"ProfileImg"}
           sx={{
             width: 30,
@@ -127,7 +124,7 @@ const Profile = () => {
               ml: 1,
             }}
           >
-            {user.displayName || "Julia"}
+            {session.displayName || "Julia"}
           </Typography>
           <IconChevronDown width="20" height="20" />
         </Box>
