@@ -7,7 +7,7 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import appBackground from "../public/assets/images/app-theme.png";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -43,7 +43,7 @@ export default function Hero() {
               fontSize: "clamp(3.5rem, 10vw, 4rem)",
             }}
           >
-            Our latest&nbsp;
+            Our PantryEase&nbsp;
             <Typography
               component="span"
               variant="h1"
@@ -55,7 +55,7 @@ export default function Hero() {
                     : "primary.light",
               }}
             >
-              products
+              App
             </Typography>
           </Typography>
           <Typography
@@ -63,9 +63,10 @@ export default function Hero() {
             color="text.secondary"
             sx={{ alignSelf: "center", width: { sm: "100%", md: "80%" } }}
           >
-            Explore our cutting-edge dashboard, delivering high-quality
-            solutions tailored to your needs. Elevate your experience with
-            top-tier features and services.
+            Explore our cutting-edge App, automatically track the quantities of
+            items in your pantry with real-time updates, get notified when items
+            are nearing their expiration dates to reduce food waste and receive
+            recipe ideas based on the ingredients available in your pantry.
           </Typography>
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -86,7 +87,12 @@ export default function Hero() {
                 "aria-label": "Enter your email address",
               }}
             />
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              role="a"
+              color="primary"
+              href="/sign-in"
+            >
               Start now
             </Button>
           </Stack>
@@ -111,8 +117,8 @@ export default function Hero() {
             width: "100%",
             backgroundImage:
               theme.palette.mode === "light"
-                ? `url(${appBackground})`
-                : `url(${appBackground})`,
+                ? `url(${"/assets/images/app-theme.png"})`
+                : `url(${"/assets/images/app-theme.png"})`,
             backgroundSize: "cover",
             borderRadius: "10px",
             outline: "1px solid",
