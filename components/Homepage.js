@@ -13,7 +13,7 @@ const Homepage = ({ session }) => {
 
   useEffect(() => {
     if (userSessionId) {
-      router.push("/inventory");
+      router.push("/dashboard");
     }
   }, [userSessionId, router]);
 

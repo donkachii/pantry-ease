@@ -12,6 +12,7 @@ import {
   where,
   onSnapshot,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 
 export const fetchItems = createAsyncThunk(
@@ -21,7 +22,6 @@ export const fetchItems = createAsyncThunk(
       console.log("items fetched");
       return await getItems(userId);
     } catch (err) {
-      console.log("🚀 ~ err:", err);
       console.log(err.response);
       return thunkAPI.rejectWithValue(err.response.data);
     }
@@ -33,6 +33,18 @@ export const postItem = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       return await addItem(data);
+    } catch (err) {
+      console.log(err.response);
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const updateItem = createAsyncThunk(
+  "items/updateItem",
+  async (data, thunkAPI) => {
+    try {
+      return await editItem(data);
     } catch (err) {
       console.log(err.response);
       return thunkAPI.rejectWithValue(err.response.data);
@@ -56,6 +68,7 @@ export const itemSlice = createSlice({
   name: "items",
   initialState: {
     items: [],
+    item: {},
     isLoading: false,
     status: null,
     isSuccess: false,
@@ -87,6 +100,19 @@ export const itemSlice = createSlice({
     builder.addCase(postItem.rejected, (state, action) => {
       state.status = "rejected";
     });
+    builder.addCase(updateItem.pending, (state, action) => {
+      state.status = "pending";
+      state.isLoading = true;
+    });
+    builder.addCase(updateItem.fulfilled, (state, action) => {
+      state.status = "success";
+      state.isLoading = false;
+      state.item = action.payload;
+    });
+    builder.addCase(updateItem.rejected, (state, action) => {
+      state.status = "rejected";
+      state.isLoading = false;
+    });
   },
 });
 
@@ -112,4 +138,20 @@ const addItem = async (body) => {
 
 const deleteItem = async (body) => {
   await deleteDoc(doc(firestore, "items", body));
+};
+
+const editItem = async (body) => {
+  const { userId, id, data } = body;
+  const itemDocRef = doc(firestore, "items", id);
+
+  // Fetch the document to ensure it exists and matches the userId
+  const itemDocSnap = await getDoc(itemDocRef);
+
+  if (itemDocSnap.exists() && itemDocSnap.data().userID === userId) {
+    console.log("Document updated successfully");
+    // Update the document with new data
+    return await updateDoc(itemDocRef, data);
+  } else {
+    console.log("No matching document found or userID does not match");
+  }
 };

@@ -1,4 +1,5 @@
-import { format, getTime, formatDistanceToNow } from "date-fns";
+import { format, getTime, formatDistanceToNow, parse } from "date-fns";
+import { Timestamp } from "firebase/firestore";
 
 // ----------------------------------------------------------------------
 
@@ -26,3 +27,19 @@ export function fToNow(date) {
       })
     : "";
 }
+
+export const convertToTimestamp = (dateString) => {
+  // Parse the date string to a Date object
+  const parsedDate = parse(dateString, "dd MMM yyyy", new Date());
+
+  // Convert to Firestore Timestamp
+  const timestamp = Timestamp.fromDate(parsedDate);
+
+  return timestamp;
+};
+
+export const convertFromTimestamp = (dateString) => {
+  const exampleTimestamp = Timestamp.fromDate(new Date("2024-08-12"));
+
+  return timestamp;
+};

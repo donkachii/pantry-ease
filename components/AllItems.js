@@ -11,24 +11,15 @@ import {
   DialogActions,
   Button,
   TextField,
+  InputBase,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import { styled, alpha } from "@mui/material/styles";
 import PageContainer from "./PageContainer";
 import ProductPerfomance from "./ProductPerformance";
 import { Add } from "@mui/icons-material";
 import { firestore } from "../libs/firebase/config";
-import {
-  doc,
-  addDoc,
-  getDocs,
-  setDoc,
-  collection,
-  updateDoc,
-  serverTimestamp,
-  query,
-  where,
-  onSnapshot,
-  deleteDoc,
-} from "firebase/firestore";
+import { doc, getDoc, serverTimestamp } from "firebase/firestore";
 import DatePicker from "./DatePicker";
 import UpdateForm from "./UpdateForm";
 import AddForm from "./AddForm";
@@ -38,21 +29,71 @@ import {
   fetchItems,
   postItem,
   removeItem,
+  updateItem,
 } from "../libs/features/items/itemReducer";
 import Loading from "../app/dashboard/loading";
 
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  // padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  width: "100%",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(2)})`,
+    transition: theme.transitions.create("width"),
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
+
 const Items = ({ session }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [openUpdateModal, setUpdateOpenModal] = useState(false);
   const [allItems, setAllItems] = useState([]);
   const [data, setData] = useState({});
+  const [updateData, setUpdateData] = useState({
+    item: "",
+    category: "",
+    quantity: "",
+    expiryDate: "",
+  });
   const [selectedDate, setSelectedDate] = useState("");
   const [open, setOpen] = useState(null);
   const [dropDownId, setDropdownId] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  //   const user = JSON.parse(localStorage.getItem("user"));
   const router = useRouter();
   const { isLoading, status, items } = useAppSelector((state) => state);
-  console.log("🚀 ~ Items ~ isLoading:", status);
   const dispatch = useAppDispatch();
 
   const user = JSON.parse(session);
@@ -65,18 +106,45 @@ const Items = ({ session }) => {
     setOpenModal(true);
   };
 
-  const handleOpenMenu = (event) => {
+  const handleUpdateCloseModal = () => {
+    setUpdateOpenModal(false);
+    setDropdownId("");
+    handleCloseMenu();
+  };
+
+  const handleUpdateOpenModal = () => {
+    setUpdateOpenModal(true);
+  };
+
+  const handleOpenMenu = async (event) => {
+    event.preventDefault();
+    let dropId = event.target.parentElement.parentElement.parentElement.id;
     setOpen(event.currentTarget);
     setDropdownId(event.target.parentElement.parentElement.parentElement.id);
+    const itemDocRef = doc(firestore, "items", dropId);
+    const itemDocSnap = await getDoc(itemDocRef);
+    const dataItem = itemDocSnap.data();
+    setUpdateData({
+      item: dataItem.item,
+      category: dataItem.category,
+      quantity: dataItem.quantity,
+      expiryDate: dataItem.expiryDate,
+    });
   };
 
   const handleCloseMenu = () => {
     setOpen(null);
+    setDropdownId("");
   };
 
   const handleAddFormChange = (e) => {
     const { id, value } = e.target;
     setData((data) => ({ ...data, [id]: value }));
+  };
+
+  const handleUpdateFormChange = (e) => {
+    const { id, value } = e.target;
+    setUpdateData((data) => ({ ...data, [id]: value }));
   };
 
   const handleDateChange = (value) => {
@@ -116,10 +184,28 @@ const Items = ({ session }) => {
     }
   };
 
-  const deleteItems = async () => {
+  const editItem = async (e) => {
+    e.preventDefault();
+    const body = {
+      userId: user.uid,
+      id: dropDownId,
+      data: updateData,
+    };
+    await dispatch(updateItem(body));
+    await dispatch(fetchItems(user.uid));
+    handleCloseMenu();
+    handleUpdateCloseModal();
+  };
+
+  const deleteItems = async (e) => {
+    e.preventDefault();
     dispatch(removeItem(dropDownId));
     dispatch(fetchItems(user.uid));
     handleCloseMenu();
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   useEffect(() => {
@@ -131,6 +217,15 @@ const Items = ({ session }) => {
       router.push("/");
     }
   }, [user.uid, router]);
+
+  useEffect(() => {
+    const filtered = items.filter(
+      (item) =>
+        item.item.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredItems(filtered);
+  }, [searchTerm, items]);
 
   return (
     <PageContainer title="Inventory" description="this is List Items">
@@ -151,6 +246,17 @@ const Items = ({ session }) => {
           New Item
         </Button>
       </Stack>
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ "aria-label": "search" }}
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </Search>
       {isLoading && (
         <>
           <p>Loading....</p>
@@ -161,10 +267,12 @@ const Items = ({ session }) => {
         <Box mt={3}>
           <ProductPerfomance
             addItem={addItem}
-            allItems={items}
+            allItems={filteredItems}
             openModal={openModal}
             open={open}
-            handleCloseModal={handleCloseModal}
+            handleUpdateOpenModal={handleUpdateOpenModal}
+            // handleUpdateFormChange={handleUpdateFormChange}
+            // handleUpdateDateChange={handleUpdateDateChange}
             handleAddFormChange={handleAddFormChange}
             selectedDate={selectedDate}
             handleDateChange={handleDateChange}
@@ -177,15 +285,15 @@ const Items = ({ session }) => {
         !isLoading && status === "success" && <p>No Items in the Pantry</p>
       )}
       {/* TODO: Adding Items to the pantry */}
-      {/* <UpdateForm
-        openModal={openModal}
-        handleCloseModal={handleCloseModal}
-        handleDateChange={handleDateChange}
-        handleAddFormChange={handleAddFormChange}
-        selectedDate={selectedDate}
-        updateItem={addItem}
-      /> */}
-
+      {openUpdateModal && (
+        <UpdateForm
+          openModal={openUpdateModal}
+          handleCloseModal={handleUpdateCloseModal}
+          handleAddFormChange={handleUpdateFormChange}
+          updateData={updateData}
+          updateItem={editItem}
+        />
+      )}
       <AddForm
         openModal={openModal}
         handleCloseModal={handleCloseModal}
@@ -194,7 +302,7 @@ const Items = ({ session }) => {
         selectedDate={selectedDate}
         addItem={addItem}
       />
-      <Dialog
+      {/* <Dialog
         open={openModal}
         onClose={handleCloseModal}
         aria-labelledby="alert-dialog-title"
@@ -219,7 +327,6 @@ const Items = ({ session }) => {
                 onChange={handleAddFormChange}
               />
 
-              {/* TODO: make select suggested */}
               <TextField
                 required
                 id="category"
@@ -228,21 +335,6 @@ const Items = ({ session }) => {
                 onChange={handleAddFormChange}
               />
 
-              {/* <TextField
-                  id="filled-select-currency"
-                  required
-                  select
-                  label="Select a Category"
-                  defaultValue="EUR"
-                  helperText="Please select your category"
-                  variant="filled"
-                >
-                  {categories.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField> */}
               <TextField
                 required
                 id="quantity"
@@ -270,7 +362,7 @@ const Items = ({ session }) => {
             Add Item
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
     </PageContainer>
   );
 };

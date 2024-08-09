@@ -10,13 +10,21 @@ import {
 } from "@mui/material";
 import DatePicker from "./DatePicker";
 import React from "react";
+import { Timestamp } from "firebase/firestore";
 
 const UpdateForm = ({
   openModal,
   handleCloseModal,
   handleAddFormChange,
   updateItem,
+  selectedDate,
+  updateData,
+  handleDateChange,
 }) => {
+  let date = updateData.expiryDate;
+
+  // console.log("🚀 ~ date:", date.toDate());
+
   return (
     <Dialog
       open={openModal}
@@ -40,6 +48,7 @@ const UpdateForm = ({
               id="item"
               label="New Item"
               variant="outlined"
+              value={updateData.item}
               onChange={handleAddFormChange}
             />
 
@@ -49,6 +58,7 @@ const UpdateForm = ({
               id="category"
               label="Category"
               variant="outlined"
+              value={updateData.category}
               onChange={handleAddFormChange}
             />
 
@@ -72,6 +82,7 @@ const UpdateForm = ({
               id="quantity"
               label="Quantity"
               type="number"
+              value={updateData.quantity}
               onChange={handleAddFormChange}
               InputLabelProps={{
                 shrink: true,
@@ -81,7 +92,7 @@ const UpdateForm = ({
 
             <DatePicker
               label="Expiry Date"
-              value={selectedDate}
+              value={date.toDate()}
               name="expiryDate"
               onChange={handleDateChange}
             />

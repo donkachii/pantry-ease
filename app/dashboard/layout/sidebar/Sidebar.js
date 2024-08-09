@@ -1,4 +1,4 @@
-import { useMediaQuery, Box, Drawer } from "@mui/material";
+import { useMediaQuery, Box, Drawer, Typography } from "@mui/material";
 import Logo from "../shared/logo/Logo";
 import SidebarItems from "./SidebarItems";
 import Upgrade from "./Updrade";
@@ -45,16 +45,29 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
             {/* Logo */}
             {/* ------------------------------------------- */}
             <Box px={2}>
-              <Logo />
+              <Typography
+                component="span"
+                variant="h3"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "clamp(1rem, 5vw, 1.5rem)",
+                  color: (theme) =>
+                    theme.palette.mode === "light"
+                      ? "primary.main"
+                      : "primary.light",
+                }}
+              >
+                PantryEase
+              </Typography>
             </Box>
             <Box>
               {/* ------------------------------------------- */}
               {/* Sidebar Items */}
               {/* ------------------------------------------- */}
-              <Box mt={3}>
+              <Box mt={5}>
                 <SidebarItems />
               </Box>
-              <Upgrade />
+              {/* <Upgrade /> */}
             </Box>
           </Box>
         </Drawer>
@@ -79,13 +92,13 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
       {/* Logo */}
       {/* ------------------------------------------- */}
       <Box px={2} py={2}>
-        <Logo />
+        <Typography>PantryEase</Typography>
       </Box>
       {/* ------------------------------------------- */}
       {/* Sidebar For Mobile */}
       {/* ------------------------------------------- */}
       <SidebarItems />
-      <Upgrade />
+      {/* <Upgrade /> */}
     </Drawer>
   );
 };

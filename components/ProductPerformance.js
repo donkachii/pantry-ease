@@ -22,6 +22,7 @@ const ProductPerfomance = ({
   open,
   handleOpenMenu,
   handleCloseMenu,
+  handleUpdateOpenModal,
 }) => {
   return (
     <BaseCard title="Item Lists">
@@ -129,7 +130,7 @@ const ProductPerfomance = ({
           paper: { sx: { width: 140 } },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleUpdateOpenModal}>
           <IconPencil /> Edit
         </MenuItem>
 

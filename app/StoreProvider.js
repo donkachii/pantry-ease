@@ -7,7 +7,6 @@ import store from "../libs/store";
 export default function StoreProvider({ children }) {
   //   const storeRef = useRef();
   //   if (!storeRef.current) {
-  //     // Create the store instance the first time this renders
   //     storeRef.current = makeStore();
   //   }
 

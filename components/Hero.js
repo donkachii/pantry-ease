@@ -7,6 +7,7 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import appBackground from "../public/assets/images/app-theme.png";
 
 export default function Hero() {
   return (
@@ -110,8 +111,8 @@ export default function Hero() {
             width: "100%",
             backgroundImage:
               theme.palette.mode === "light"
-                ? 'url("/static/images/templates/templates-images/hero-light.png")'
-                : 'url("/static/images/templates/templates-images/hero-dark.png")',
+                ? `url(${appBackground})`
+                : `url(${appBackground})`,
             backgroundSize: "cover",
             borderRadius: "10px",
             outline: "1px solid",

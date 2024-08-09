@@ -78,7 +78,7 @@ export default function SignIn() {
       };
 
       await createSession(JSON.stringify(userDetails));
-      router.push("/inventory");
+      router.push("/dashboard");
     }
   };
 

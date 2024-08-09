@@ -16,8 +16,7 @@ import {
 import { fetchItems } from "../../../../libs/features/items/itemReducer";
 
 const DashboardPage = ({ session }) => {
-  const { isLoading, status, items } = useAppSelector((state) => state);
-  console.log("🚀 ~ Items ~ isLoading:", items);
+  const { items } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
