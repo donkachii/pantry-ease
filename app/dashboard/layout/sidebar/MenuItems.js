@@ -23,16 +23,16 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
-    title: "Item List",
+    title: "Inventory",
     icon: IconTable,
     href: "/dashboard/items",
   },
-  // {
-  //   id: uniqueId(),
-  //   title: "Category List",
-  //   icon: IconCircleDot,
-  //   href: "/ui-components/forms",
-  // },
+  {
+    id: uniqueId(),
+    title: "Recipe Suggestion",
+    icon: IconCircleDot,
+    href: "/dashboard/recipe",
+  },
   // {
   //   id: uniqueId(),
   //   title: "Alerts",

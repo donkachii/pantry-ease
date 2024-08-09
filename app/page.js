@@ -4,7 +4,6 @@ import Homepage from "../components/Homepage";
 
 export default function Home() {
   const session = cookies().get(SESSION_COOKIE_NAME)?.value || null;
-  console.log("🚀 ~ Home ~ session:", session);
 
   return (
     <>

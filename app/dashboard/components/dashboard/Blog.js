@@ -9,23 +9,20 @@ import user3 from "../../../../public/assets/images/backgrounds/u4.jpg";
 const blogs = [
   {
     img: user1,
-    title: "Super awesome, Next 14 is coming soon!",
-    subtitle:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
+    title: "Super awesome, More Features coming soon!",
+    subtitle: "Stay Tune for more features",
     btncolor: "error.main",
   },
   {
     img: user2,
-    title: "Super awesome, Next 14 is coming soon!",
-    subtitle:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
+    title: "Super awesome, More Features coming soon!",
+    subtitle: "Stay Tune for more features",
     btncolor: "warning.main",
   },
   {
     img: user3,
-    title: "Super awesome, Next 14 is coming soon!",
-    subtitle:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
+    title: "Super awesome, More Features coming soon!",
+    subtitle: "Stay Tune for more features",
     btncolor: "primary.main",
   },
 ];
