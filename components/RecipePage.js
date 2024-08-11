@@ -11,6 +11,7 @@ import { useAppSelector, useAppDispatch, useAppStore } from "../libs/hooks";
 import Loading from "../app/dashboard/loading";
 import { readStreamableValue } from "ai/rsc";
 import { generate } from "../app/action";
+import Markdown from "react-markdown";
 
 const RecipePage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -74,7 +75,7 @@ const RecipePage = () => {
         </>
       )}
 
-      {generation && <div>{generation}</div>}
+      {generation && <Markdown>{generation}</Markdown>}
     </PageContainer>
   );
 };
