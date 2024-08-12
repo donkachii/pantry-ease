@@ -53,8 +53,8 @@ Ensure you have the following installed on your system:
       PROJECT_ID=your_project_id
       STORAGE_BUCKET=your_storage_bucket
       MESSAGING_SENDER_ID=your_messaging_sender_id
-      PUBLIC_APP_ID=your_app_id
-      PUBLIC_MEASUREMENT_ID=your_measurement_id
+      APP_ID=your_app_id
+      MEASUREMENT_ID=your_measurement_id
 
 4. Run the development server:
 
