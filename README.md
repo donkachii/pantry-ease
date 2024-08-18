@@ -1,4 +1,4 @@
-# PantryEase
+# <img src="/public/assets/images/pantry.png" alt="PantryEase Image" width="50" height="50" /> PantryEase
 
 ## Overview
 
