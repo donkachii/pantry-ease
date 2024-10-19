@@ -29,6 +29,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-helmet-async": "^2.0.5",
+    "react-markdown": "^9.0.1",
     "react-redux": "^9.1.2",
     "redux-logger": "^3.0.6",
     "tabler": "^1.0.0-alpha.8"
