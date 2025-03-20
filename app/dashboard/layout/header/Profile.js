@@ -93,7 +93,7 @@ const Profile = ({ session }) => {
         onClick={handleClick2}
       >
         <Avatar
-          src={session.photoURL || "/images/sessions/session2.jpg"}
+          src={session?.photoURL || "/images/sessions/session2.jpg"}
           alt={"ProfileImg"}
           sx={{
             width: 30,

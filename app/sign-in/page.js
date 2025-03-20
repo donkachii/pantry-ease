@@ -58,23 +58,23 @@ export default function SignIn() {
       } else {
         // User does not exist, create a new user document
         await setDoc(userRef, {
-          name: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
+          name: user?.displayName,
+          email: user?.email,
+          photoURL: user?.photoURL,
           createdAt: serverTimestamp(),
           lastLogin: serverTimestamp(),
         });
       }
 
       setUser({
-        displayName: user.displayName,
-        photoURL: user.photoURL,
+        displayName: user?.displayName,
+        photoURL: user?.photoURL,
       });
 
       const userDetails = {
-        displayName: user.displayName,
-        uid: user.uid,
-        photoURL: user.photoURL,
+        displayName: user?.displayName,
+        uid: user?.uid,
+        photoURL: user?.photoURL,
       };
 
       await createSession(JSON.stringify(userDetails));
