@@ -48,13 +48,15 @@ Ensure you have the following installed on your system:
   - Create a .env.local file in the root directory and add your Firebase configuration:
 
       ```makefile
-      API_KEY=your_api_key
-      AUTH_DOMAIN=your_auth_domain
-      PROJECT_ID=your_project_id
-      STORAGE_BUCKET=your_storage_bucket
-      MESSAGING_SENDER_ID=your_messaging_sender_id
-      APP_ID=your_app_id
-      MEASUREMENT_ID=your_measurement_id
+      NEXT_PUBLIC_API_KEY=your_api_key
+      NEXT_PUBLIC_AUTH_DOMAIN=your_auth_domain
+      NEXT_PUBLIC_PROJECT_ID=your_project_id
+      NEXT_PUBLIC_STORAGE_BUCKET=your_storage_bucket
+      NEXT_PUBLIC_MESSAGING_SENDER_ID=your_messaging_sender_id
+      NEXT_PUBLIC_APP_ID=your_app_id
+      NEXT_PUBLIC_MEASUREMENT_ID=your_measurement_id
+
+  These `NEXT_PUBLIC_*` variables are inlined at build time. Set the same names in your hosting provider's environment (e.g. Vercel) before running `next build`, or Firebase will fail to initialize in production.
 
 4. Run the development server:
 

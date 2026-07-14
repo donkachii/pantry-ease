@@ -14,7 +14,7 @@ import { useUserSession } from "../hooks/use-user-session";
 
 const Homepage = ({ session }) => {
   const router = useRouter();
-  const userSessionId = useUserSession(JSON.parse(session));
+  const userSessionId = useUserSession(session);
 
   useEffect(() => {
     if (userSessionId) {

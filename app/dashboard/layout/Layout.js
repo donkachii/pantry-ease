@@ -42,7 +42,7 @@ export default function MainLayout({ session, children }) {
         {/* ------------------------------------------- */}
         <Header
           toggleMobileSidebar={() => setMobileSidebarOpen(true)}
-          session={JSON.parse(session)}
+          session={session}
         />
         {/* ------------------------------------------- */}
         {/* PageContent */}

@@ -1,9 +1,6 @@
 import * as React from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import theme, { UserProvider } from "../ui/theme";
 import { fontVariables } from "../ui/fonts";
-import StoreProvider from "./StoreProvider";
+import Providers from "./Providers";
 import "./globals.css";
 
 export const metadata = {
@@ -16,14 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={fontVariables}>
       <body>
-        <StoreProvider>
-          <UserProvider>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              {children}
-            </ThemeProvider>
-          </UserProvider>
-        </StoreProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

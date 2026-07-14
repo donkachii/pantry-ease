@@ -96,7 +96,7 @@ const Items = ({ session }) => {
   const { isLoading, status, items } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
-  const user = JSON.parse(session);
+  const user = session;
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -209,14 +209,17 @@ const Items = ({ session }) => {
   };
 
   useEffect(() => {
+    if (!user?.uid) {
+      return;
+    }
     dispatch(fetchItems(user.uid));
-  }, [dispatch, user.uid]);
+  }, [dispatch, user?.uid]);
 
   useEffect(() => {
-    if (!user.uid) {
+    if (!user?.uid) {
       router.push("/");
     }
-  }, [user.uid, router]);
+  }, [user?.uid, router]);
 
   useEffect(() => {
     const filtered = items.filter(

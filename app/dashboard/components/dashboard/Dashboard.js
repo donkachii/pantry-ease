@@ -20,6 +20,9 @@ const DashboardPage = ({ session }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (!session?.uid) {
+      return;
+    }
     dispatch(fetchItems(session.uid));
   }, [dispatch, session]);
 

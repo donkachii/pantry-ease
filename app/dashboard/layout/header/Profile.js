@@ -124,7 +124,7 @@ const Profile = ({ session }) => {
               ml: 1,
             }}
           >
-            {session.displayName || "Julia"}
+            {session?.displayName || "Julia"}
           </Typography>
           <IconChevronDown width="20" height="20" />
         </Box>

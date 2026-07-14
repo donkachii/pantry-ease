@@ -2,7 +2,9 @@
 
 import { createTheme } from "@mui/material/styles";
 import { createContext, useContext, useState } from "react";
-import { fraunces, plusJakarta } from "./fonts";
+
+const fontBody = "var(--font-body), system-ui, sans-serif";
+const fontDisplay = "var(--font-display), Georgia, serif";
 
 const theme = createTheme({
   palette: {
@@ -30,33 +32,33 @@ const theme = createTheme({
     divider: "rgba(47, 93, 58, 0.12)",
   },
   typography: {
-    fontFamily: plusJakarta.style.fontFamily,
+    fontFamily: fontBody,
     h1: {
-      fontFamily: fraunces.style.fontFamily,
+      fontFamily: fontDisplay,
       fontWeight: 600,
     },
     h2: {
-      fontFamily: fraunces.style.fontFamily,
+      fontFamily: fontDisplay,
       fontWeight: 600,
     },
     h3: {
-      fontFamily: fraunces.style.fontFamily,
+      fontFamily: fontDisplay,
       fontWeight: 600,
     },
     h4: {
-      fontFamily: fraunces.style.fontFamily,
+      fontFamily: fontDisplay,
       fontWeight: 600,
     },
     h5: {
-      fontFamily: fraunces.style.fontFamily,
+      fontFamily: fontDisplay,
       fontWeight: 500,
     },
     h6: {
-      fontFamily: fraunces.style.fontFamily,
+      fontFamily: fontDisplay,
       fontWeight: 500,
     },
     button: {
-      fontFamily: plusJakarta.style.fontFamily,
+      fontFamily: fontBody,
       fontWeight: 600,
       textTransform: "none",
     },
