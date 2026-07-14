@@ -1,5 +1,6 @@
-import * as React from "react";
+"use client";
 
+import * as React from "react";
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,15 +11,15 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
-import ToggleColorMode from "./ToggleColorMode";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 
-const logoStyle = {
-  width: "40px",
-  height: "auto",
-  cursor: "pointer",
-};
+const navItems = [
+  { label: "Features", id: "features" },
+  { label: "How it works", id: "how-it-works" },
+];
 
-function Header({ mode, toggleColorMode }) {
+function Header() {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -27,162 +28,176 @@ function Header({ mode, toggleColorMode }) {
 
   const scrollToSection = (sectionId) => {
     const sectionElement = document.getElementById(sectionId);
-    const offset = 128;
     if (sectionElement) {
-      const targetScroll = sectionElement.offsetTop - offset;
-      sectionElement.scrollIntoView({ behavior: "smooth" });
-      window.scrollTo({
-        top: targetScroll,
-        behavior: "smooth",
-      });
+      const offset = 96;
+      const top =
+        sectionElement.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
       setOpen(false);
     }
   };
 
   return (
-    <div>
-      <AppBar
-        position="fixed"
-        sx={{
-          boxShadow: 0,
-          bgcolor: "transparent",
-          backgroundImage: "none",
-          mt: 2,
-        }}
-      >
-        <Container maxWidth="lg">
-          <Toolbar
-            variant="regular"
-            sx={(theme) => ({
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexShrink: 0,
-              borderRadius: "999px",
-              bgcolor:
-                theme.palette.mode === "light"
-                  ? "rgba(255, 255, 255, 0.4)"
-                  : "rgba(0, 0, 0, 0.4)",
-              backdropFilter: "blur(24px)",
-              maxHeight: 40,
-              border: "1px solid",
-              borderColor: "divider",
-              boxShadow:
-                theme.palette.mode === "light"
-                  ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
-                  : "0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)",
-            })}
+    <AppBar
+      position="fixed"
+      elevation={0}
+      sx={{
+        boxShadow: "none",
+        bgcolor: "transparent",
+        backgroundImage: "none",
+        mt: { xs: 1.5, sm: 2 },
+      }}
+    >
+      <Container maxWidth="lg">
+        <Toolbar
+          disableGutters
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            px: { xs: 2, sm: 2.5 },
+            py: 0.5,
+            minHeight: { xs: 52, sm: 56 },
+            borderRadius: "999px",
+            bgcolor: "rgba(250, 252, 248, 0.72)",
+            backdropFilter: "blur(20px)",
+            border: "1px solid",
+            borderColor: "rgba(47, 93, 58, 0.12)",
+            boxShadow: "0 8px 32px rgba(26, 46, 31, 0.06)",
+          }}
+        >
+          <Typography
+            component="a"
+            href="#hero"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("hero");
+            }}
+            sx={{
+              fontFamily: "var(--font-display), Georgia, serif",
+              fontWeight: 700,
+              fontSize: "clamp(1.15rem, 2.5vw, 1.4rem)",
+              color: "primary.main",
+              letterSpacing: "-0.02em",
+              ml: 0.5,
+              textDecoration: "none",
+              cursor: "pointer",
+            }}
           >
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: "flex",
-                alignItems: "center",
-                ml: "18px",
-                px: 0,
-              }}
-            >
-              <Typography
-                component="span"
-                variant="h3"
+            PantryEase
+          </Typography>
+
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              alignItems: "center",
+              gap: 0.5,
+            }}
+          >
+            {navItems.map((item) => (
+              <Button
+                key={item.id}
+                color="inherit"
+                size="small"
+                onClick={() => scrollToSection(item.id)}
                 sx={{
-                  fontWeight: "bold",
-                  fontSize: "clamp(1rem, 5vw, 1.5rem)",
-                  color: (theme) =>
-                    theme.palette.mode === "light"
-                      ? "primary.main"
-                      : "primary.light",
+                  color: "text.secondary",
+                  fontWeight: 500,
+                  px: 1.5,
+                  "&:hover": {
+                    color: "primary.main",
+                    bgcolor: "transparent",
+                  },
                 }}
               >
-                PantryEase
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                gap: 0.5,
-                alignItems: "center",
+                {item.label}
+              </Button>
+            ))}
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              href="/sign-in"
+              sx={{ ml: 1 }}
+            >
+              Sign in
+            </Button>
+          </Box>
+
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              aria-label="Open menu"
+              onClick={toggleDrawer(true)}
+              sx={{ color: "primary.main" }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Drawer
+              anchor="right"
+              open={open}
+              onClose={toggleDrawer(false)}
+              PaperProps={{
+                sx: {
+                  width: "min(320px, 85vw)",
+                  bgcolor: "background.paper",
+                  p: 2,
+                },
               }}
             >
-              {/* <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} /> */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mb: 2,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontFamily: "var(--font-display), Georgia, serif",
+                    fontWeight: 700,
+                    color: "primary.main",
+                    fontSize: "1.25rem",
+                  }}
+                >
+                  PantryEase
+                </Typography>
+                <IconButton
+                  aria-label="Close menu"
+                  onClick={toggleDrawer(false)}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+              {navItems.map((item) => (
+                <MenuItem
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  sx={{
+                    py: 1.5,
+                    borderRadius: 2,
+                    color: "text.primary",
+                    fontWeight: 500,
+                  }}
+                >
+                  {item.label}
+                </MenuItem>
+              ))}
+              <Divider sx={{ my: 2 }} />
               <Button
-                color="primary"
-                variant="text"
-                size="small"
-                component="a"
+                variant="contained"
+                color="secondary"
                 href="/sign-in"
+                fullWidth
+                sx={{ py: 1.25 }}
               >
                 Sign in
               </Button>
-            </Box>
-            <Box sx={{ display: { sm: "", md: "none" } }}>
-              <Button
-                variant="text"
-                color="primary"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-                sx={{ minWidth: "30px", p: "4px" }}
-              >
-                <MenuIcon />
-              </Button>
-              <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-                <Box
-                  sx={{
-                    minWidth: "60dvw",
-                    p: 2,
-                    backgroundColor: "background.paper",
-                    flexGrow: 1,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "end",
-                      flexGrow: 1,
-                    }}
-                  >
-                    <ToggleColorMode
-                      mode={mode}
-                      toggleColorMode={toggleColorMode}
-                    />
-                  </Box>
-                  <MenuItem onClick={() => scrollToSection("features")}>
-                    Features
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("testimonials")}>
-                    Testimonials
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("highlights")}>
-                    Highlights
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("pricing")}>
-                    Pricing
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("faq")}>
-                    FAQ
-                  </MenuItem>
-                  <Divider />
-
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="/sign-in"
-                      target="_blank"
-                      sx={{ width: "100%" }}
-                    >
-                      Sign in
-                    </Button>
-                  </MenuItem>
-                </Box>
-              </Drawer>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </div>
+            </Drawer>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }
 

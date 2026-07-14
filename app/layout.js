@@ -2,17 +2,19 @@ import * as React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme, { UserProvider } from "../ui/theme";
+import { fontVariables } from "../ui/fonts";
 import StoreProvider from "./StoreProvider";
+import "./globals.css";
 
 export const metadata = {
   title: "PantryEase",
   description:
-    "Welcome to PantryEase: Your Ultimate AI Pantry Management Solution",
+    "Know what you have, when it expires, and what to cook — waste less with PantryEase.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={fontVariables}>
       <body>
         <StoreProvider>
           <UserProvider>

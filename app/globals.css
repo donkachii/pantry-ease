@@ -1,7 +1,24 @@
+:root {
+  --bg: #f3f6f1;
+  --bg-paper: #fafcf8;
+  --ink: #1a2e1f;
+  --ink-muted: #4a5c4e;
+  --primary: #2f5d3a;
+  --primary-dark: #1e3d28;
+  --accent: #c6d93a;
+  --accent-soft: rgba(198, 217, 58, 0.35);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
@@ -10,23 +27,91 @@ body {
   overflow-x: hidden;
 }
 
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+}
 
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Atmosphere grain overlay */
+.landing-grain {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px;
+  z-index: 0;
+}
+
+/* Hero staggered reveal */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-reveal {
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards;
+}
+
+.hero-reveal-1 {
+  animation-delay: 0.08s;
+}
+.hero-reveal-2 {
+  animation-delay: 0.2s;
+}
+.hero-reveal-3 {
+  animation-delay: 0.34s;
+}
+.hero-reveal-4 {
+  animation-delay: 0.48s;
+}
+.hero-reveal-5 {
+  animation-delay: 0.62s;
+}
+
+/* Section soft entrance */
+@keyframes sectionFade {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-reveal {
+  animation: sectionFade 0.8s ease both;
+}
+
+@supports (animation-timeline: view()) {
+  .section-reveal {
+    animation: sectionFade 0.8s ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal,
+  .section-reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
